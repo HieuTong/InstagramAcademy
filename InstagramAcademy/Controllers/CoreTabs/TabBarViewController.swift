@@ -23,6 +23,14 @@ class TabBarViewController: UITabBarController {
         let nav3 = UINavigationController(rootViewController: vc3)
         let nav4 = UINavigationController(rootViewController: vc4)
         let nav5 = UINavigationController(rootViewController: vc5)
+        
+        nav1.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "house"), tag: 1)
+        nav2.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "globe"), tag: 1)
+        nav3.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), tag: 1)
+        nav4.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "bell"), tag: 1)
+        nav5.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "person"), tag: 1)
+        
+        setViewControllers([nav1, nav2, nav3, nav4, nav5], animated: false)
     }
 
 
