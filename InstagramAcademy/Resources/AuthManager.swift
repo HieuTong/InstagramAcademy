@@ -13,12 +13,71 @@ public class AuthManager  {
     static let shared = AuthManager()
     
     //MARK: - Public
-    public func registerNewUser(username: String, email: String, password: String) {
-        
+    public func registerNewUser(username: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
+        /*
+         - Check if usernam is available
+         - Check if email is available
+         - Create Account
+         - Insert account to database
+         */
+        DatabaseManager.shared.canCreateNewUser(with: email, username: username) { [weak self] (canCreate) in
+            if canCreate {
+                /*
+                 - Create account
+                 - Insert amount to database
+                 */
+                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                    if error == nil, result != nil {
+                        //Firebase auth could not create account
+                        completion(false)
+                        return
+                    }
+                    
+                    //inset to database
+                    DatabaseManager.shared.insertNewUser(with: email, username: username) { [weak self] (inserted) in
+                        if inserted {
+                            completion(true)
+                            return
+                        } else {
+                            // Failed to insert to database
+                            completion(false)
+                            return
+                        }
+                    }
+                }
+            } else {
+                //either username or email not exist
+                completion(false)
+            }
+        }
     }
     
-    public func loginUser(username: String?, email: String?, password: String) {
-        
+    public func loginUser(username: String?, email: String?, password: String, completion: @escaping ((Bool) -> Void)) {
+        if let email = email {
+            //email log in
+            Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
+                guard authResult != nil, error == nil else {
+                    completion(false)
+                    return
+                }
+                completion(true)
+            }
+        } else if let username = username {
+            //user name log in
+            print(username)
+        }
     }
     
+    //Attempt to log out firebase user
+    public func logOut(completion: (Bool) -> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion(true)
+            return
+        } catch {
+            print(error)
+            completion(false)
+            return
+        }
+    }
 }

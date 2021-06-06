@@ -6,6 +6,8 @@ target 'InstagramAcademy' do
   use_frameworks!
 
 pod 'Appirater'
+pod 'SDWebImage'
+
   # Pods for InstagramAcademy
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
