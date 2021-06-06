@@ -1,5 +1,5 @@
 //
-//  IGFeedPostTableViewCell.swift
+//  IGFeedPostHeaderTableViewCell.swift
 //  InstagramAcademy
 //
 //  Created by HieuTong on 5/2/21.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class IGFeedPostTableViewCell: UITableViewCell {
-    
-    static let identifier = "IGFeedPostTableViewCell"
+class IGFeedPostHeaderTableViewCell: UITableViewCell {
+
+    static let identifier = "IGFeedPostHeaderTableViewCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,4 +22,9 @@ final class IGFeedPostTableViewCell: UITableViewCell {
     public func configure() {
         //configure the cell
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+
 }
